@@ -5,18 +5,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.webapp.cuentas.ConnectionFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.webapp.cuentas.modelo.Usuario;
 
+@Repository
 public class UsuarioDAO {
 	
 	private Connection connection;
 
-
-	public UsuarioDAO() {
-		try {
-			connection = new ConnectionFactory().getConnection();
-		} catch (SQLException e) {
+	@Autowired
+	public UsuarioDAO(DataSource ds) {
+		try{
+			this.connection = ds.getConnection();
+		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
 	}
@@ -37,8 +42,6 @@ public class UsuarioDAO {
 			rs.close();
 			stmt.close();
 
-			connection.close();
-			
 			return encontrado;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -56,7 +59,6 @@ public class UsuarioDAO {
 			stmt.setString(2, usuario.getPassword());
 			stmt.execute();
 
-			connection.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}		

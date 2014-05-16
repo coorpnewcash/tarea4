@@ -36,6 +36,7 @@
 
 		</c:forEach>
 	</table>
+	<br/>
 	<script>
 		function fueHecho(datosRespuesta){
 			alert("Cuenta pagada con éxito");

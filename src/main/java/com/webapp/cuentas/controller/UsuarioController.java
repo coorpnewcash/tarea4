@@ -2,6 +2,7 @@ package com.webapp.cuentas.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,6 +11,16 @@ import com.webapp.cuentas.modelo.Usuario;
 
 @Controller
 public class UsuarioController {
+	
+	UsuarioDAO usuarioDao;
+	
+	public UsuarioController() {
+	}
+	
+	@Autowired
+	public UsuarioController(UsuarioDAO usuarioDao){
+		this.usuarioDao = usuarioDao;
+	}
 	
 	@RequestMapping(value={"/","/index"})
 	public String paginaInicio(){
@@ -23,7 +34,6 @@ public class UsuarioController {
 	
 	@RequestMapping("/efectuaLogin")
 	public String efectuaLogin(Usuario usuario, HttpSession session){
-		UsuarioDAO usuarioDao = new UsuarioDAO();
 		if(usuarioDao.existeUsuario(usuario)){
 			session.setAttribute("usuarioLogueado", usuario);
 			return "menu";

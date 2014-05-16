@@ -77,6 +77,5 @@ public class CuentaController {
 		System.out.println("Emitiendo metodo pagar...");
 		dao.pagar(id);
 		response.setStatus(200);
-		
 	}
 }
